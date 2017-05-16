@@ -1,3 +1,4 @@
+colorscheme torte
 " set number of colors available
 set t_Co=256
 " curn off compatibility with vi
@@ -31,7 +32,6 @@ set ruler " show line, column coordinates of the cursor in
 " the bottom-right
 syntax on " turn on syntax highlighting
 set showmatch " highlight matching parens
-colorscheme solarized
 set background=dark
 
 " line length settings
