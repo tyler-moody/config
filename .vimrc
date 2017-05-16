@@ -1,36 +1,38 @@
-colorscheme torte
+" turn off compatibility with vi
+set nocompatible
+
+
+filetype indent plugin on " use the file type to determine indentation rules
+
+syntax on " turn on syntax highlighting
+
 " set number of colors available
 set t_Co=256
-" curn off compatibility with vi
-set nocp
+colorscheme torte
 
 " set up tabbing
 set tabstop=2 " sets the width of a tab character
 set softtabstop=2 " width of soft tabs (tabs made of spaces)
-set shiftwidth=2 " how many cols of indentation to start/end when 
-" autoindenting
+set shiftwidth=2 " how many cols of indentation to start/end when autoindenting
+autocmd FileType python setlocal tabstop=2 " override python defaults
+autocmd FileType python setlocal shiftwidth=2
+
 set shiftround " forces << and >> to use multiples of shiftwidth
-set backspace=indent,eol,start " allow backspaces through autoindentation
 " set expandtab " expand all tabs to spaces
 set smarttab " insert tabs at the start of a line using shiftwidth
-set smartindent
+
+set backspace=indent,eol,start " allow backspaces through autoindentation
 
 " set up searching
 set hlsearch " highlight search matches
 set incsearch " show search matches as you type
 set ignorecase " ignore case in "/" searches by default
-set smartcase " if pattern contains uppercase, use case sensitive 
-" search
-set gdefault " global search & replace by default (not just first 
-" occurrence)
+set smartcase " if pattern contains uppercase, use case sensitive search
+set gdefault " global search & replace by default (not just first occurrence)
 
-" prettyness
-set relativenumber " turn on line numbering - relative to current 
-" position for easier navigation
-set nu
-set ruler " show line, column coordinates of the cursor in 
-" the bottom-right
-syntax on " turn on syntax highlighting
+set number
+set relativenumber
+set ruler " show line, column coordinates of the cursor in the bottom-right
 set showmatch " highlight matching parens
 set background=dark
 
@@ -38,21 +40,13 @@ set background=dark
 set wrap
 set formatoptions=qrn1
 " set colorcolumn=81
-" change the font in gvim
-if has('gui_running')
-set guifont=Courier_New:h9
-endif
 
 " features on/off
 set nobackup " turn off backup files
 set noswapfile " turn off swap files  
-set nocompatible " turn off vi compatibility restrictions
-set modelines=0 " some kind of security exploit prevention???
 
-autocmd BufEnter *.txt syntax off " turn off syntax highlighting for 
-" text files
-autocmd BufEnter *.ld syntax off " turn off syntax highlighting for 
-" loader directive files
+autocmd BufEnter *.txt syntax off " turn off syntax highlighting for text files
+autocmd BufEnter *.ld syntax off " turn off syntax highlighting for loader directive files
 
 " force use of hjkl instead of arrow keys
 nnoremap <up> <nop>
