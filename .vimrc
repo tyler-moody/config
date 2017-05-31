@@ -18,7 +18,7 @@ autocmd FileType python setlocal tabstop=2 " override python defaults
 autocmd FileType python setlocal shiftwidth=2
 
 set shiftround " forces << and >> to use multiples of shiftwidth
-" set expandtab " expand all tabs to spaces
+set expandtab " expand all tabs to spaces
 set smarttab " insert tabs at the start of a line using shiftwidth
 
 set backspace=indent,eol,start " allow backspaces through autoindentation
