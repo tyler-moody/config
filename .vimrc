@@ -11,11 +11,11 @@ set t_Co=256
 colorscheme torte
 
 " set up tabbing
-set tabstop=2 " sets the width of a tab character
-set softtabstop=2 " width of soft tabs (tabs made of spaces)
-set shiftwidth=2 " how many cols of indentation to start/end when autoindenting
-autocmd FileType python setlocal tabstop=2 " override python defaults
-autocmd FileType python setlocal shiftwidth=2
+set tabstop=4 " sets the width of a tab character
+set softtabstop=4 " width of soft tabs (tabs made of spaces)
+set shiftwidth=4 " how many cols of indentation to start/end when autoindenting
+autocmd FileType python setlocal tabstop=4 " override python defaults
+autocmd FileType python setlocal shiftwidth=4
 
 set shiftround " forces << and >> to use multiples of shiftwidth
 set expandtab " expand all tabs to spaces
