@@ -1,8 +1,14 @@
-" turn off compatibility with vi
+" mandatory portion to work with Vundle
 set nocompatible
+filetype off
 
-
-filetype indent plugin on " use the file type to determine indentation rules
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+" other plugins go here
+call vundle#end()
+filetype plugin indent on
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax on " turn on syntax highlighting
 
