@@ -5,6 +5,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-airline/vim-airline'
 " other plugins go here
 call vundle#end()
 filetype plugin indent on
@@ -38,7 +39,8 @@ set gdefault " global search & replace by default (not just first occurrence)
 
 set number
 set relativenumber
-set ruler " show line, column coordinates of the cursor in the bottom-right
+set noshowmode
+" set ruler " show line, column coordinates of the cursor in the bottom-right
 set showmatch " highlight matching parens
 set background=dark
 
