@@ -14,6 +14,8 @@ filetype plugin indent on
 
 syntax on " turn on syntax highlighting
 
+au BufNewFile,BufRead *.todo set syntax=todo
+
 " set number of colors available
 set t_Co=256
 colorscheme torte
