@@ -56,7 +56,7 @@ set formatoptions=qrn1
 set nobackup " turn off backup files
 set noswapfile " turn off swap files  
 
-autocmd BufEnter *.txt syntax off " turn off syntax highlighting for text files
+" autocmd BufEnter *.txt syntax off " turn off syntax highlighting for text files
 autocmd BufEnter *.ld syntax off " turn off syntax highlighting for loader directive files
 
 " force use of hjkl instead of arrow keys
@@ -85,3 +85,6 @@ nnoremap <C-h> <C-w>h " make split navigation use hjkl
 nnoremap <C-j> <C-w>j " make split navigation use hjkl
 nnoremap <C-k> <C-w>k " make split navigation use hjkl
 nnoremap <C-l> <C-w>l " make split navigation use hjkl
+
+" automatically run rustfmt when saving rust files
+let g:rustfmt_autosave = 1
