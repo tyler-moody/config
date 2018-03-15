@@ -21,8 +21,7 @@ def current_timecard_filename():
     directory = os.path.expanduser(config_value('directory'))
     return os.path.join(directory, filename)
 
-def add_record(task, description):
-    timestamp = datetime.datetime.now()
+def add_record(task, timestamp, description):
     line = '{}:::{}:::{}\n'.format(timestamp, task, description)
     with open(current_timecard_filename(), 'a') as f:
         f.write(line)
@@ -39,10 +38,17 @@ def parse_arguments(args):
             monday = datetime.date.fromordinal(today.toordinal() - today.weekday())
             date = monday
         summarize(date)
+    elif first == 'manual':
+        timestamp = datetime.datetime.strptime(args[2], '%Y%m%d_%H:%M')
+        task = args[3]
+        description = ' '.join(args[4:])
+        add_record(task, timestamp, description)
+
     else:
         task = args[1]
+        timestamp = datetime.datetime.now()
         description = ' '.join(args[2:])
-        add_record(task, description)
+        add_record(task, timestamp, description)
 
 if __name__ == '__main__':
     parse_arguments(sys.argv)
