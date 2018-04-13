@@ -12,13 +12,13 @@ call vundle#end()
 filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-syntax on " turn on syntax highlighting
-
-au BufNewFile,BufRead *.todo set syntax=todo
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " set number of colors available
 set t_Co=256
-colorscheme torte
+set background=dark
+syntax on " turn on syntax highlighting
+colors termschool
 
 " set up tabbing
 set tabstop=4 " sets the width of a tab character
@@ -45,10 +45,10 @@ set relativenumber
 set noshowmode
 " set ruler " show line, column coordinates of the cursor in the bottom-right
 set showmatch " highlight matching parens
-set background=dark
 
 " line length settings
 set wrap
+set linebreak
 set formatoptions=qrn1
 " set colorcolumn=81
 
