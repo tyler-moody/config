@@ -6,6 +6,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rust-lang/rust.vim'
 " other plugins go here
 call vundle#end()
@@ -15,10 +16,10 @@ filetype plugin indent on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " set number of colors available
-set t_Co=256
+" set t_Co=256
 set background=dark
 syntax on " turn on syntax highlighting
-colors termschool
+colors neodark
 
 " set up tabbing
 set tabstop=4 " sets the width of a tab character
