@@ -3,52 +3,63 @@
 import argparse
 import datetime
 import os
+from pathlib import Path
 import sys
 import yaml
 
 def config_value(field):
     config_file = open(os.path.expanduser('~/.timecard'),'r')
     config = yaml.load(config_file)
+    config_file.close()
     return config[field]
 
-def summarize(date):
-    print('a summary of week starting {} goes here'.format(date))
+def get_records(date):
+    if Path(timecard_filename(date)).is_file():
+        with open(timecard_filename(date)) as f:
+            records = yaml.load(f)
+        return records
+    else:
+        return list()
 
-def current_timecard_filename():
-    today = datetime.datetime.today()
-    monday = datetime.date.fromordinal(today.toordinal() - today.weekday())
-    filename = monday.strftime('%Y-%m-%d')
+def write_records(date, records):
+    with open(timecard_filename(date), 'w') as f:
+        yaml.dump(records, f, default_flow_style=False)
+
+def summarize(date):
+    print('summary for {}:'.format(date.strftime('%Y-%m-%d')))
+    records = get_records(date)
+    for r in records:
+        print('task: {} \tduration: {} \tdescription: {}'.format(r['task'], r['duration'], r['description']))
+
+def timecard_filename(date):
+    filename = date.strftime('%Y-%m-%d')
     directory = os.path.expanduser(config_value('directory'))
     return os.path.join(directory, filename)
 
-def add_record(task, timestamp, description):
-    line = '{}:::{}:::{}\n'.format(timestamp, task, description)
-    with open(current_timecard_filename(), 'a') as f:
-        f.write(line)
+def add_record(date, duration, task, description):
+    records = get_records(date)
+    records.append({'duration': duration, 'task': task, 'description': description})
+    write_records(date, records)
 
 def parse_arguments(args):
     if len(args) < 2:
-        exit(1)
+        args.append('today')
     first = args[1]
-    if first == 'summary':
-        if len(args) > 2:
-            date = args[2]
-        else:
-            today = datetime.datetime.today()
-            monday = datetime.date.fromordinal(today.toordinal() - today.weekday())
-            date = monday
-        summarize(date)
-    elif first == 'manual':
-        timestamp = datetime.datetime.strptime(args[2], '%Y%m%d_%H:%M')
-        task = args[3]
-        description = ' '.join(args[4:])
-        add_record(task, timestamp, description)
-
+    if first == 'today':
+        today = datetime.datetime.today()
+        summarize(today)
+    elif first == 'yesterday':
+        today = datetime.datetime.today()
+        last_workday = today - datetime.timedelta(days=1)
+        while last_workday.weekday() > 4:
+            last_workday -= datetime.timedelta(days=1)
+        summarize(last_workday)
     else:
+        today = datetime.datetime.today()
         task = args[1]
-        timestamp = datetime.datetime.now()
-        description = ' '.join(args[2:])
-        add_record(task, timestamp, description)
+        duration = args[2]
+        description = ' '.join(args[3:])
+        add_record(today, duration, task, description)
 
 if __name__ == '__main__':
     parse_arguments(sys.argv)
