@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import argparse
 import datetime
 import os
 from pathlib import Path
@@ -45,7 +44,11 @@ def parse_arguments(args):
     if len(args) < 2:
         args.append('today')
     first = args[1]
-    if first == 'today':
+    if first in ['-h', '--help']:
+        print('"timecard today" to get a summary of today\'s logged time')
+        print('"timecard yesterday" to get a summary of the previous workday\'s logged time')
+        print('"timecard <task> <duration> <description>" to add to today\'s logged time')
+    elif first == 'today':
         today = datetime.datetime.today()
         summarize(today)
     elif first == 'yesterday':
