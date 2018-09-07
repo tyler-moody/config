@@ -24,14 +24,47 @@ def write_records(date, records):
     with open(timecard_filename(date), 'w') as f:
         yaml.dump(records, f, default_flow_style=False)
 
+def minutes(duration):
+    if 'h' in duration:
+        (hours, duration) = duration.split('h')
+        hours = int(hours)
+    else:
+        hours = 0
+    if 'm' in duration:
+        (minutes, duration) = duration.split('m')
+        minutes = int(minutes)
+    else:
+        minutes = 0
+    return (60*hours + minutes)
+
+def duration_fmt(minutes):
+    hours = minutes // 60
+    minutes -= hours*60
+    return '{}h{}m'.format(hours, minutes)
+
+
 def summarize(date):
     print('summary for {}:'.format(date.strftime('%Y-%m-%d')))
     records = get_records(date)
-    format_spec = '{:20s}\t{:10s}\t{}'
-    print(format_spec.format('TASK', 'DURATION', 'DESCRIPTION'))
+
+    # collect accumulated time, descriptions for each task
+    tasks = {}
     for r in records:
-        #print('task: {} \tduration: {} \tdescription: {}'.format(r['task'], r['duration'], r['description']))
-        print(format_spec.format(r['task'], r['duration'], r['description']))
+        task = r['task']
+        duration = minutes(r['duration'])
+        description = r['description']
+        if task in tasks:
+            tasks[task]['duration'] += duration
+            tasks[task]['description'] += ', ' + description
+        else:
+            tasks[task] = {'duration': duration, 'description': description}
+    for t in tasks:
+        tasks[t]['duration'] = duration_fmt(tasks[t]['duration'])
+
+    format_spec = '{:20s}\t{:8s}\t{}'
+    print(format_spec.format('TASK', 'DURATION', 'DESCRIPTION'))
+    for t in tasks:
+        print(format_spec.format(t, tasks[t]['duration'], tasks[t]['description']))
 
 def timecard_filename(date):
     filename = date.strftime('%Y-%m-%d')
