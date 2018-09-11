@@ -49,9 +49,11 @@ def summarize(date):
 
     # collect accumulated time, descriptions for each task
     tasks = {}
+    total_minutes = 0
     for r in records:
         task = r['task']
         duration = minutes(r['duration'])
+        total_minutes += duration
         description = r['description']
         if task in tasks:
             tasks[task]['duration'] += duration
@@ -65,6 +67,8 @@ def summarize(date):
     print(format_spec.format('TASK', 'DURATION', 'DESCRIPTION'))
     for t in tasks:
         print(format_spec.format(t, tasks[t]['duration'], tasks[t]['description']))
+    print(format_spec.format(20*'-', 8*'-',''))
+    print(format_spec.format('total time', duration_fmt(total_minutes),''))
 
 def timecard_filename(date):
     filename = date.strftime('%Y-%m-%d')
