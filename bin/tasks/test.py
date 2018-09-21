@@ -1,132 +1,144 @@
+"""tests for the TaskApp class and its support classes"""
+
+import unittest
 from datetime import datetime
-from os import path, remove
+from os import mkdir, path, remove
 from shutil import rmtree
 from task import Action, Project, TaskApp
-import unittest
+
+def create_clean_directory(directory):
+    """creates an empty directory for tests that read/write files"""
+    if path.exists(directory):
+        rmtree(directory)
+    mkdir(directory)
 
 class TestTaskApp(unittest.TestCase):
+    """tests for the TaskApp class"""
     def setUp(self):
-        self.directory = 'test_resources/'
-        self.tasks = TaskApp()
-        self.tasks.set_record_directory(self.directory)
-        pass
+        """prepare for a test"""
+        self.directory = 'test_resources'
+        create_clean_directory(self.directory)
+        self.task_app = TaskApp()
+        self.task_app.set_record_directory(self.directory)
+
 
     def tearDown(self):
-        pass
+        """clean up after a test"""
+        rmtree(self.directory)
 
     def test_create(self):
+        """test for instance creation"""
         pass
 
-    def test_setRecordDirectory(self):
-        self.assertEqual(self.directory, self.tasks.record_directory)
+    def test_create_project(self):
+        """test for the create_project method"""
+        name = 'project'
+        self.task_app.create_project(name)
+        self.assertEqual(1, sum([proj.name == name for proj in self.task_app._projects]))
 
-    def test_loadProjectsSuccess(self):
-        self.assertTrue(self.tasks.load_projects())
-        projects = ['Proj0', 'Proj1', 'Proj2']
-        for p in projects:
-            self.assertTrue(p in self.tasks.projects)
-
-    def test_loadProjectsFailure(self):
-        self.tasks.set_record_directory('foo')
-        self.assertFalse(self.tasks.load_projects())
-
-    def test_createProject(self):
-        new_project_name = 'NewProj'
-        new_project_dir = path.join(self.directory, 'projects', new_project_name)
-        if path.exists(new_project_dir):
-            rmtree(new_project_dir)
-        self.assertTrue(self.tasks.create_project(new_project_name))
-        self.assertTrue(path.exists(path.join(self.directory, 'projects', new_project_name)))
-
-    def test_FailToCreateDuplicateProject(self):
-        new_project_name = 'NewProj'
-        new_project_dir = path.join(self.directory, 'projects', new_project_name)
-        if path.exists(new_project_dir):
-            rmtree(new_project_dir)
-        self.assertTrue(self.tasks.create_project(new_project_name))
-        self.assertFalse(self.tasks.create_project(new_project_name))
+    def test_fail_to_create_duplicate_projects(self):
+        """ensure that the app won't allow two projects with the same name"""
+        name = 'project'
+        self.assertTrue(self.task_app.create_project(name))
+        self.assertEqual(1, sum([proj.name == name for proj in self.task_app._projects]))
+        self.assertFalse(self.task_app.create_project(name))
+        self.assertEqual(1, sum([proj.name == name for proj in self.task_app._projects]))
 
 class TestProject(unittest.TestCase):
+    """tests for the Project class"""
     def setUp(self):
+        """prepare for a test"""
         self.project = Project(name='proj')
+        self.directory = 'test_resources'
+        create_clean_directory(self.directory)
 
     def tearDown(self):
-        pass
+        """clean up after a test"""
+        rmtree(self.directory)
 
-    def test_Create(self):
+    def test_create(self):
+        """test for instance creation"""
         self.assertEqual('proj', self.project.name)
         self.assertEqual(0, len(self.project.actions))
 
-    def test_AddAction(self):
+    def test_add_action(self):
+        """test for add_action method"""
         action = Action(description='foo')
         self.project.add_action(action)
         self.assertEqual(action, self.project.actions[0])
 
-    def test_writeToFile(self):
+    def test_write_to_file(self):
+        """test for to_file method"""
         filename = path.join('test_resources', 'test_project.yaml')
         if path.exists(filename):
             remove(filename)
 
-        a0 = Action(description = 'foo')
-        self.project.add_action(a0)
-        a1 = Action(description = 'bar')
-        self.project.add_action(a1)
+        self.project.add_action(Action(description='foo'))
+        self.project.add_action(Action(description='bar'))
 
         self.project.write_to_file(filename)
 
-    def test_equalNames(self):
-        a = Project(name='foo')
-        b = Project(name='foo')
-        self.assertEqual(a,b)
-        b.name = 'bar'
-        self.assertNotEqual(a,b)
+    def test_equal_names(self):
+        """test for __eq__ method"""
+        project = Project(name='foo')
+        other = Project(name='foo')
+        self.assertEqual(project, other)
+        other.name = 'bar'
+        self.assertNotEqual(project, other)
 
-    def test_equalActions(self):
-        a = Project(name='foo')
-        b = Project(name='foo')
-        a0 = Action(description='f')
-        a.add_action(a0)
-        self.assertNotEqual(a,b)
-        b.add_action(a0)
-        self.assertEqual(a,b)
+    def test_equal_actions(self):
+        """test for __eq__ method"""
+        project = Project(name='foo')
+        other = Project(name='foo')
+        action = Action(description='f')
+        project.add_action(action)
+        self.assertNotEqual(project, other)
+        other.add_action(action)
+        self.assertEqual(project, other)
 
-    def test_readFromFile(self):
+    def test_read_from_file(self):
+        """test for from_file method"""
         filename = path.join('test_resources', 'test_project.yaml')
         if path.exists(filename):
             remove(filename)
 
-        a = Action(description = 'foo')
-        self.project.add_action(a)
+        action = Action(description='foo')
+        self.project.add_action(action)
         self.project.write_to_file(filename)
 
-        projCopy = Project.from_file(filename)
-        self.assertEqual(self.project, projCopy)
+        copy = Project.from_file(filename)
+        self.assertEqual(self.project, copy)
 
 class TestAction(unittest.TestCase):
+    """tests for the Action class"""
     def setUp(self):
+        """prepare for a test"""
         pass
 
     def tearDown(self):
+        """clean up a test"""
         pass
 
-    def test_Create(self):
-        a = Action(description = '')
+    def test_create(self):
+        """test for instance creation"""
+        action = Action(description='')
 
-    def test_toFromRecord(self):
-        a = Action(description='foo', 
-                start = datetime.today(),
-                due = datetime(year=2020, month=2, day=28),
-                notes = 'bar'
-            )
-        b = Action.from_dict(a.to_dict())
-        self.assertEqual(a,b)
+    def test_to_from_record(self):
+        """test for to_record and from_record methods"""
+        action = Action(description='foo',
+                        start=datetime.today(),
+                        due=datetime(year=2020, month=2, day=28),
+                        notes='bar')
+        other = Action.from_dict(action.to_dict())
+        self.assertEqual(action, other)
 
-    def test_Equality(self):
-        a = Action(description='foo')
-        b = Action(description='foo')
-        self.assertEqual(a,b)
-        b.description = 'bar'
-        self.assertNotEqual(a,b)
+    def test_eq(self):
+        """test for __eq__ method"""
+        action = Action(description='foo')
+        other = Action(description='foo')
+        self.assertEqual(action, other)
+        other.description = 'bar'
+        self.assertNotEqual(action, other)
 
 if __name__ == '__main__':
     unittest.main()

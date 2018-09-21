@@ -2,7 +2,7 @@
 """A task tracking application"""
 
 from datetime import datetime
-from os import listdir, mkdir
+from os import listdir
 from os import path
 from yaml import load, dump
 
@@ -10,7 +10,7 @@ class TaskApp():
     """The application"""
     def __init__(self):
         self.record_directory = ''
-        self.projects = []
+        self._projects = []
 
     def set_record_directory(self, directory):
         """Assigns the directory to read/write projects from/to"""
@@ -22,7 +22,7 @@ class TaskApp():
         if path.isdir(projects_directory):
             for proj_name in listdir(projects_directory):
                 if path.isdir(path.join(projects_directory, proj_name)):
-                    self.projects.append(proj_name)
+                    self._projects.append(proj_name)
             directory_exists = True
         else:
             directory_exists = False
@@ -35,12 +35,9 @@ class TaskApp():
 
     def create_project(self, project_name) -> bool:
         """Creates a new project"""
-        directory = self._get_project_directory(project_name)
-        if path.exists(directory):
-            already_exists = True
-        else:
-            mkdir(directory)
-            already_exists = False
+        already_exists = any([proj.name == project_name for proj in self._projects])
+        if not already_exists:
+            self._projects.append(Project(project_name))
         return not already_exists
 
 class Project():
