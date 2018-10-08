@@ -42,18 +42,12 @@ def duration_fmt(minutes):
     minutes -= hours*60
     return '{}h{}m'.format(hours, minutes)
 
-
-def summarize(date):
-    print('summary for {}:'.format(date.strftime('%Y-%m-%d')))
-    records = get_records(date)
-
+def sum_time_by_task(records):
     # collect accumulated time, descriptions for each task
     tasks = {}
-    total_minutes = 0
     for r in records:
         task = r['task']
         duration = minutes(r['duration'])
-        total_minutes += duration
         description = r['description']
         if task in tasks:
             tasks[task]['duration'] += duration
@@ -62,13 +56,38 @@ def summarize(date):
             tasks[task] = {'duration': duration, 'description': description}
     for t in tasks:
         tasks[t]['duration'] = duration_fmt(tasks[t]['duration'])
+    return tasks
 
-    format_spec = '{:20s}\t{:8s}\t{}'
-    print(format_spec.format('TASK', 'DURATION', 'DESCRIPTION'))
+def calc_total_minutes(records):
+    total_minutes = 0
+    for r in records:
+        duration = minutes(r['duration'])
+        total_minutes += duration
+    return total_minutes
+
+_format_spec = '{:20s}\t{:8s}\t{}'
+def print_tasks(tasks):
+    print(_format_spec.format('TASK', 'DURATION', 'DESCRIPTION'))
     for t in tasks:
-        print(format_spec.format(t, tasks[t]['duration'], tasks[t]['description']))
-    print(format_spec.format(20*'-', 8*'-',''))
-    print(format_spec.format('total time', duration_fmt(total_minutes),''))
+        print(_format_spec.format(t, tasks[t]['duration'], tasks[t]['description']))
+
+def print_total(total_minutes):
+    print(_format_spec.format(20*'-', 8*'-',''))
+    print(_format_spec.format('total time', duration_fmt(total_minutes),''))
+
+def summarize_week(monday):
+    records = list()
+    for d in [monday + datetime.timedelta(days=n) for n in range(5)]:
+        records += get_records(d)
+    print('summary for week starting {}'.format(monday.strftime('%Y-%m-%d')))
+    print_tasks(sum_time_by_task(records))
+    print_total(calc_total_minutes(records))
+
+def summarize_day(date):
+    records = get_records(date)
+    print('summary for {}:'.format(date.strftime('%Y-%m-%d')))
+    print_tasks(sum_time_by_task(records))
+    print_total(calc_total_minutes(records))
 
 def timecard_filename(date):
     filename = date.strftime('%Y-%m-%d')
@@ -90,13 +109,20 @@ def parse_arguments(args):
         print('"timecard <task> <duration> <description>" to add to today\'s logged time')
     elif first == 'today':
         today = datetime.datetime.today()
-        summarize(today)
+        summarize_day(today)
     elif first == 'yesterday':
         today = datetime.datetime.today()
         last_workday = today - datetime.timedelta(days=1)
         while last_workday.weekday() > 4:
             last_workday -= datetime.timedelta(days=1)
-        summarize(last_workday)
+        summarize_day(last_workday)
+    elif first == 'week':
+        today = datetime.datetime.today()
+        # find the previous monday (back up 1 week if today is monday)
+        last_monday = today - datetime.timedelta(days=1)
+        while last_monday.weekday() != 0:
+            last_monday = last_monday - datetime.timedelta(days=1)
+        summarize_week(last_monday)
     else:
         today = datetime.datetime.today()
         task = args[1]
