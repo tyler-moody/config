@@ -106,6 +106,7 @@ def parse_arguments(args):
     if first in ['-h', '--help']:
         print('"timecard today" to get a summary of today\'s logged time')
         print('"timecard yesterday" to get a summary of the previous workday\'s logged time')
+        print('"timecard week" to get a summary of the previous week\'s logged time')
         print('"timecard <task> <duration> <description>" to add to today\'s logged time')
     elif first == 'today':
         today = datetime.datetime.today()
