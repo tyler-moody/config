@@ -51,7 +51,10 @@ def sum_time_by_task(records):
         description = r['description']
         if task in tasks:
             tasks[task]['duration'] += duration
-            tasks[task]['description'] += ', ' + description
+            if tasks[task]['description'].endswith('.'):
+                tasks[task]['description'] += " " + description
+            else:
+                tasks[task]['description'] += ". " + description
         else:
             tasks[task] = {'duration': duration, 'description': description}
     for t in tasks:
@@ -113,6 +116,7 @@ def parse_arguments(args):
         summarize_day(today)
     elif first == 'yesterday':
         today = datetime.datetime.today()
+        # back up to the previous workday
         last_workday = today - datetime.timedelta(days=1)
         while last_workday.weekday() > 4:
             last_workday -= datetime.timedelta(days=1)
