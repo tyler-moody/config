@@ -18,6 +18,9 @@
 
 - set up python 3.7
 
+- set up notepad++
+	- copy notepad++/themes directory to C:\Users\tmoody\AppData\Roaming\Notepad++\
+
 - set up tortoisesvn
 	https://tortoisesvn.net/downloads.html
 
