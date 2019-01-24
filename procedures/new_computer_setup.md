@@ -2,9 +2,15 @@
 - clone this repo
 
 - install firefox
-	- never remember passwords
-	- ublock origin
-	- make default browser
+	- settings
+		- never remember passwords
+		- make default browser
+		- block trackers always
+		- block 3rd party cookies always
+		- send "do not track" always
+	- extensions
+		- ublock origin
+		- privacy badger
 
 - install keepass
 
