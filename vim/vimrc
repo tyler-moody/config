@@ -5,6 +5,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'Chiel92/vim-autoformat'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rust-lang/rust.vim'
@@ -12,6 +13,11 @@ Plugin 'rust-lang/rust.vim'
 call vundle#end()
 filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:formatdef_custom = '"astyle -n"'
+let g:formatters_c = ['custom']
+let g:formatters_cxx = ['custom']
+autocmd BufWritePre,BufReadPost *.h,*.hpp,*.c,*.cpp : Autoformat
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 au FileType text set autoindent
