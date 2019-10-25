@@ -1,3 +1,0 @@
-source ${HOME}/.cargo/env
-
-export HISTFILESIZE=10000
