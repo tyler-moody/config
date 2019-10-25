@@ -26,7 +26,6 @@ au FileType text set autoindent
 " set t_Co=256
 set background=dark
 syntax on " turn on syntax highlighting
-colors neodark
 
 " set up tabbing
 set tabstop=4 " sets the width of a tab character
