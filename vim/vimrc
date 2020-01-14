@@ -4,12 +4,13 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Chiel92/vim-autoformat'
+Plugin 'jremmen/vim-ripgrep'
 call vundle#end()
 
 filetype plugin indent on
 
-let g:formatterpath=['/usr/bin']
-autocmd BufWritePre,BufReadPost *.h,*.hpp,*.c,*.cpp : Autoformat
+"let g:formatterpath=['/usr/bin']
+"autocmd BufWritePre,BufReadPost *.h,*.hpp,*.c,*.cpp : Autoformat
  
 set background=dark
 syntax on
@@ -19,6 +20,8 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 set smarttab
+
+set smartindent
 
 set hlsearch
 set incsearch
@@ -31,9 +34,12 @@ set noswapfile
 
 set number
 
+set colorcolumn=80
+
 "set spell spelllang=en_us
 
 inoremap jk <ESC>
 let mapleader = ' '
-nnoremap <leader>s : set spell!
-nnoremap <leader>n : noh<CR>
+nnoremap <leader>s : set spell! " toggle spelling highlighting
+nnoremap <leader>n : noh<CR>    " turn off highlighting for search results
+nnoremap <leader>R : Rg <C-R><C-W><CR> " Rg for the token under the cursor
