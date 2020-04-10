@@ -15,11 +15,7 @@ filetype plugin indent on
 set background=dark
 syntax on
 
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
 set expandtab
-set smarttab
 
 set smartindent
 
@@ -30,16 +26,20 @@ set smartcase
 
 set wildmenu
 
+set nobackup
 set noswapfile
 
 set number
 
 set colorcolumn=80
 
-"set spell spelllang=en_us
+set laststatus=2
 
 inoremap jk <ESC>
 let mapleader = ' '
 nnoremap <leader>s : set spell! " toggle spelling highlighting
 nnoremap <leader>n : noh<CR>    " turn off highlighting for search results
-nnoremap <leader>R : Rg <C-R><C-W><CR> " Rg for the token under the cursor
+nnoremap <leader>f : Rg <C-R><C-W><CR> " Rg for the token under the cursor
+
+set path+=./**
+set makeprg=build
