@@ -9,7 +9,10 @@ call vundle#end()
 
 filetype plugin indent on
 
-"let g:formatterpath=['/usr/bin']
+let g:formatterpath=['/opt/qumulo/toolchain/bin', '/usr/bin']
+autocmd BufWritePre *.rs : Autoformat
+autocmd BufWritePre *.py : Autoformat
+" qumulo conventions are too weird for autoformatters :(
 "autocmd BufWritePre,BufReadPost *.h,*.hpp,*.c,*.cpp : Autoformat
  
 set background=dark
@@ -17,7 +20,8 @@ syntax on
 
 set expandtab
 
-set smartindent
+" I think this was causing the extra-indents-while-typing-a-python-file issue
+"set smartindent
 
 set hlsearch
 set incsearch
@@ -31,15 +35,27 @@ set noswapfile
 
 set number
 
-set colorcolumn=80
-
 set laststatus=2
 
-inoremap jk <ESC>
-let mapleader = ' '
-nnoremap <leader>s : set spell! " toggle spelling highlighting
-nnoremap <leader>n : noh<CR>    " turn off highlighting for search results
-nnoremap <leader>f : Rg <C-R><C-W><CR> " Rg for the token under the cursor
+" Mouse scrolling in normal mode only
+set mouse=n
 
 set path+=./**
 set makeprg=build
+
+let mapleader = ' '
+nnoremap <leader>s : set spell! " toggle spelling highlighting
+nnoremap <leader>n : noh<CR>    " turn off highlighting for search results
+nnoremap <leader>f : Rg <C-R><C-W> --sort path<CR>              " Rg for the token under the cursor
+nnoremap <leader>g : Rg <C-R><C-W> --sort path -g !*test*<CR>   " Same as above but omit test files
+inoremap jk <ESC>
+
+" zoom in on a split
+noremap Zi <c-w>_\| <c-w>\|
+" zoom back out
+noremap Zo <c-w>=
+" Keybinds below here are for other people
+inoremap jj <ESC>
+
+set whichwrap=<,>,[,],b,s       " must be set after filetype
+set colorcolumn=+1
