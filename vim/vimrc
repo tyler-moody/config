@@ -38,7 +38,7 @@ set number
 set laststatus=2
 
 " Mouse scrolling in normal mode only
-set mouse=n
+"set mouse=n
 
 set path+=./**
 set makeprg=build
@@ -59,3 +59,4 @@ inoremap jj <ESC>
 
 set whichwrap=<,>,[,],b,s       " must be set after filetype
 set colorcolumn=+1
+set mouse=a
