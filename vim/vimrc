@@ -8,6 +8,7 @@ Plugin 'jremmen/vim-ripgrep'
 call vundle#end()
 
 filetype plugin indent on
+set whichwrap=<,>,[,],b,s       " must be set after filetype
 
 let g:formatterpath=['/opt/qumulo/toolchain/bin']
 autocmd BufWritePre *.rs : Autoformat
@@ -19,9 +20,6 @@ set background=dark
 syntax on
 
 set expandtab
-
-" I think this was causing the extra-indents-while-typing-a-python-file issue
-"set smartindent
 
 set hlsearch
 set incsearch
@@ -35,15 +33,15 @@ set noswapfile
 
 set number
 
-" powerline-status settings
+" powerline settings
 set laststatus=2
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
 
-" Mouse scrolling in normal mode only
-"set mouse=n
 set mouse=a
+
+set colorcolumn=100
 
 set path+=./**
 set makeprg=build
@@ -55,13 +53,6 @@ nnoremap <leader>f : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehous
 nnoremap <leader>g : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!signatures' -g '!*test*'<CR>
 inoremap jk <ESC>
 
-" zoom in on a split
-noremap Zi <c-w>_\| <c-w>\|
-" zoom back out
-noremap Zo <c-w>=
 " Keybinds below here are for other people
 inoremap jj <ESC>
 
-set whichwrap=<,>,[,],b,s       " must be set after filetype
-
-set colorcolumn=100
