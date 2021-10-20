@@ -35,7 +35,11 @@ set noswapfile
 
 set number
 
+" powerline-status settings
 set laststatus=2
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 
 " Mouse scrolling in normal mode only
 "set mouse=n
@@ -45,10 +49,10 @@ set path+=./**
 set makeprg=build
 
 let mapleader = ' '
-nnoremap <leader>s : set spell! " toggle spelling highlighting
-nnoremap <leader>n : noh<CR>    " turn off highlighting for search results
-nnoremap <leader>f : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**'<CR>               " Rg for the token under the cursor
-nnoremap <leader>g : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!*test*'<CR>  " Same as above but omit test files
+" Rg for the token under the cursor
+nnoremap <leader>f : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!signatures'<CR>
+" Same as above but omit test files
+nnoremap <leader>g : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!signatures' -g '!*test*'<CR>
 inoremap jk <ESC>
 
 " zoom in on a split
