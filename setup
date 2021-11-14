@@ -1,4 +1,5 @@
 installed packages:
+        black
 	git
         powerline
 	tmux
