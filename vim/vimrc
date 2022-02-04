@@ -13,9 +13,13 @@ set whichwrap=<,>,[,],b,s       " must be set after filetype
 let g:formatterpath=['/opt/qumulo/toolchain/bin']
 autocmd BufWritePre *.rs : Autoformat
 autocmd BufWritePre *.py : Autoformat
+autocmd BufWritePre *.js : Autoformat
 " qumulo conventions are too weird for autoformatters :(
 "autocmd BufWritePre,BufReadPost *.h,*.hpp,*.c,*.cpp : Autoformat
  
+autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
+autocmd Filetype text setlocal tabstop=4 shiftwidth=4 autoindent
+
 set background=dark
 syntax on
 
@@ -33,11 +37,7 @@ set noswapfile
 
 set number
 
-" powerline settings
 set laststatus=2
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
 
 set mouse=a
 
