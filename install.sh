@@ -8,5 +8,8 @@ vim +PluginInstall +qall
 
 ln -s ${PWD}/tmux.conf ${HOME}/.tmux.conf 
 
-echo 
-echo "Go to https://github.com/zolrath/wemux if you want wemux"
+git clone https://github.com/zolrath/wemux.git /usr/local/share/wemux
+ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
+cp /usr/local/share/wemux/wemux.conf.example ${PWD}/wemux.conf 
+echo "host_list=(${USER})" >> ${PWD}/wemux.conf
+sudo mv ${PWD}/wemux.conf /usr/local/etc/wemux.conf
