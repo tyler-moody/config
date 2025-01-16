@@ -2,6 +2,8 @@ echo "source ${PWD}/bashrc" >> ${HOME}/.bashrc
 
 echo "source ${PWD}/gdbinit" >> ${HOME}/.gdbinit
 
+ln -s ${PWD}/scripts ${HOME}/scripts
+
 ln -s ${PWD}/digrc ${HOME}/.digrc
 
 git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
