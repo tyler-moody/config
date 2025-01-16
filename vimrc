@@ -12,10 +12,7 @@ set whichwrap=<,>,[,],b,s       " must be set after filetype
 
 let g:formatterpath=['/opt/qumulo/toolchain/bin']
 autocmd BufWritePre *.rs : Autoformat
-autocmd BufWritePre *.py : Autoformat
 autocmd BufWritePre *.js : Autoformat
-" qumulo conventions are too weird for autoformatters :(
-"autocmd BufWritePre,BufReadPost *.h,*.hpp,*.c,*.cpp : Autoformat
  
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 autocmd Filetype text setlocal tabstop=4 shiftwidth=4 autoindent
@@ -43,16 +40,60 @@ set mouse=a
 
 set colorcolumn=100
 
-set path+=./**
-set makeprg=build
-
 let mapleader = ' '
 " Rg for the token under the cursor
 nnoremap <leader>f : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!signatures'<CR>
 " Same as above but omit test files
 nnoremap <leader>g : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!signatures' -g '!*test*'<CR>
 inoremap jk <ESC>
+nnoremap <leader>a : Autoformat <CR>
 
-" Keybinds below here are for other people
-inoremap jj <ESC>
 
+" Hop between related files
+function GoToTest()
+    let newfile = expand('%:r') . '_test.' . expand('%:e')
+    execute "e " . fnameescape(l:newfile)
+endfunc
+function GoFromTest()
+    let newfile = substitute(expand('%:r'), '_test$', '.' . expand('%:e'), '')
+    execute "e " . fnameescape(l:newfile)
+endfunc
+function ToggleTestFile()
+    " If in abc_test.xyz file, open abc.xyz
+    " If in abc.xyz, open abc_test.xyz
+    let base = expand('%:r')
+    if base =~ '.*_test'
+        call GoFromTest()
+    else
+        call GoToTest()
+    end
+endfunc
+
+function GoToHeader()
+    let newfile = expand('%:r') . '.h'
+    execute "e " . fnameescape(l:newfile)
+endfunc
+function GoToSource()
+    let newfile = expand('%:r') . '.c'
+    execute "e " . fnameescape(l:newfile)
+endfunc
+function ToggleHeaderSource()
+    " If in abc.c file, open abc.h
+    " If in abc.h, open abc.c
+    let ext = expand('%:e')
+    if ext =~ 'c'
+        call GoToHeader()
+    else
+        call GoToSource()
+    end
+endfunc
+
+function GoToGen()
+    let newfile = 'build/debug/' . expand('%') . '.gen.h'
+    execute "e " . fnameescape(l:newfile)
+endfunc
+
+command T call ToggleTestFile()
+command H call ToggleHeaderSource()
+command C call ToggleHeaderSource()
+command G call GoToGen()
