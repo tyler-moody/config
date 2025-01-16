@@ -1,5 +1,7 @@
 echo "source ${PWD}/bashrc" >> ${HOME}/.bashrc
 
+echo "source ${PWD}/gdbinit" >> ${HOME}/.gdbinit
+
 git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
 ln -s ${PWD}/vimrc ${HOME}/.vimrc
 vim +PluginInstall +qall
