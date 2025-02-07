@@ -12,8 +12,11 @@ vim +PluginInstall +qall
 
 ln -s ${PWD}/tmux.conf ${HOME}/.tmux.conf 
 
-git clone https://github.com/zolrath/wemux.git /usr/local/share/wemux
-ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
+sudo git clone https://github.com/zolrath/wemux.git /usr/local/share/wemux
+sudo ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
 cp /usr/local/share/wemux/wemux.conf.example ${PWD}/wemux.conf 
 echo "host_list=(${USER})" >> ${PWD}/wemux.conf
 sudo mv ${PWD}/wemux.conf /usr/local/etc/wemux.conf
+
+# Install nfs-common for showmount, used by scripts/mount.sh
+sudo apt update && sudo apt install nfs-common -y
