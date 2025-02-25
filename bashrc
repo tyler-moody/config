@@ -6,5 +6,5 @@ alias crd-csq='./check_run.py --build --no-cunit-core-dumps --flavor debug --qua
 alias daily='source ${HOME}/config/scripts/daily.sh'
 alias trg="tools/red_green.py"
 alias qmount="for host in {gravytrain,iss}.eng.qumulo.com; do sudo ${HOME}/scripts/mount.sh \$host; done"
-alias signatures='build gen; generate/signatures.py --flavor=debug update'
+alias signatures='build gen; signatures/tool.py --flavor=debug update'
 ${HOME}/src/prebuild
