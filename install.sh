@@ -6,7 +6,9 @@ if ! cat ${HOME}/.gdbinit | grep -q "source ${PWD}/gdbinit"; then
     echo "source ${PWD}/gdbinit" >> ${HOME}/.gdbinit
 fi
 
-ln -s ${PWD}/scripts ${HOME}/scripts
+if ! test -d "${HOME}/scripts" ; then
+    ln -s ${PWD}/scripts ${HOME}/scripts
+fi
 
 ln -s ${PWD}/digrc ${HOME}/.digrc
 
