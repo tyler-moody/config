@@ -1,6 +1,10 @@
-echo "source ${PWD}/bashrc" >> ${HOME}/.bashrc
+if ! cat ${HOME}/.bashrc | grep -q "source ${PWD}/bashrc"; then
+    echo "source ${PWD}/bashrc" >> ${HOME}/.bashrc
+fi
 
-echo "source ${PWD}/gdbinit" >> ${HOME}/.gdbinit
+if ! cat ${HOME}/.gdbinit | grep -q "source ${PWD}/gdbinit"; then
+    echo "source ${PWD}/gdbinit" >> ${HOME}/.gdbinit
+fi
 
 ln -s ${PWD}/scripts ${HOME}/scripts
 
