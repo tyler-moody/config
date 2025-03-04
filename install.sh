@@ -12,6 +12,16 @@ ln -s ${PWD}/digrc ${HOME}/.digrc
 
 git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
 ln -s ${PWD}/vimrc ${HOME}/.vimrc
+if ! test -f "${HOME}/.vim/after/syntax/c.vim" && test -d ${HOME}/src ; then
+    echo "c.vim"
+    mkdir -p ${HOME}/.vim/after/syntax
+    ln -s ${HOME}/src/tools/editors/vim/after/syntax/c.vim ${HOME}/.vim/after/syntax/c.vim
+fi
+if ! test -f "${HOME}/.vim/plugin/figlet.vim" && test -d ${HOME}/src ; then
+    echo "figlet.vim"
+    mkdir -p ${HOME}/.vim/plugin
+    ln -s ${HOME}/src/tools/editors/vim/plugin/figlet.vim ${HOME}/.vim/plugin/figlet.vim
+fi
 vim +PluginInstall +qall
 
 ln -s ${PWD}/tmux.conf ${HOME}/.tmux.conf 
