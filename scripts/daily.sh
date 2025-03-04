@@ -4,7 +4,7 @@ TOOLS=${HOME}/tools
 LINKING_CACHE=${HOME}/linking_cache
 
 cd ${SRC}
-qonstruct/cache_tool.py trim --entry-mtime "2 days ago" ${LINKING_CACHE}
+qonstruct/cache_tool.py trim --entry-mtime "1 days ago" ${LINKING_CACHE}
 hg qpop -a && hg fetch
 ${SRC}/prebuild
 sudo apt update && sudo apt upgrade -y
