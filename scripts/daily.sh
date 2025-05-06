@@ -3,6 +3,8 @@ SRC=${HOME}/src
 TOOLS=${HOME}/tools
 LINKING_CACHE=${HOME}/linking_cache
 
+sudo journalctl --vacuum-time=7d
+
 cd ${SRC}
 qonstruct/cache_tool.py trim --entry-mtime "1 days ago" ${LINKING_CACHE}
 hg qpop -a && hg fetch
