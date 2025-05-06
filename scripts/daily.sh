@@ -3,6 +3,7 @@ SRC=${HOME}/src
 TOOLS=${HOME}/tools
 LINKING_CACHE=${HOME}/linking_cache
 
+${HOME}/config/scripts/cleanup_snaps.sh
 sudo journalctl --vacuum-time=7d
 
 cd ${SRC}
