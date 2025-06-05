@@ -15,7 +15,10 @@ autocmd BufWritePre *.rs : Autoformat
 autocmd BufWritePre *.js : Autoformat
  
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
-autocmd Filetype text setlocal tabstop=4 shiftwidth=4 autoindent
+
+set autoindent
+set shiftwidth=4
+set tabstop=4
 
 set background=dark
 syntax on
