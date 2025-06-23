@@ -1,0 +1,7 @@
+{
+    "build_default_options": {
+        "linking_cache": "rw",
+        "linking_cache_directory": "/home/tmoody/linking_cache",
+        "nfs_cache_server": "iss.eng.qumulo.com:/submit/build_cache"
+    }
+}

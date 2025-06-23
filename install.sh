@@ -12,6 +12,9 @@ fi
 
 ln -s ${PWD}/digrc ${HOME}/.digrc
 
+mkdir -p ${HOME}/linking_cache
+ln -s ${PWD}/qumulorc ${HOME}/.qumulorc
+
 git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
 ln -s ${PWD}/vimrc ${HOME}/.vimrc
 if ! test -f "${HOME}/.vim/after/syntax/c.vim" && test -d ${HOME}/src ; then
