@@ -31,6 +31,8 @@ vim +PluginInstall +qall
 
 ln -s ${PWD}/tmux.conf ${HOME}/.tmux.conf 
 
+ln -s ${PWD}/hgrc ${HOME}/.hgrc
+
 sudo git clone https://github.com/zolrath/wemux.git /usr/local/share/wemux
 sudo ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
 cp /usr/local/share/wemux/wemux.conf.example ${PWD}/wemux.conf 
