@@ -17,6 +17,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt autoremove -y
 qpkg sweep
 qpkg sync
+rm -rf build/tmp
 
 ${SRC}/tools/clean_build.sh
 ${SRC}/tools/rm_merge_remnants.sh
@@ -25,4 +26,5 @@ hg fetch --cwd ${TOOLS}; pkill -f hg.real; pkill -f hg
 
 chmod 600 infrastructure/id_rsa
 
-build tags
+qmount
+cp -f /mnt/gravytrain/build/latest/src/tags ~/src
