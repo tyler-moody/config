@@ -45,6 +45,7 @@ set colorcolumn=100
 let mapleader = ' '
 " Rg for the token under the cursor
 nnoremap <leader>f : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!signatures'<CR>
+nnoremap <leader>h : Rg -e <C-R><C-W>_new -e <C-R><C-W>_on_stack -e <C-R><C-W>_var<CR>
 " Same as above but omit test files
 nnoremap <leader>g : Rg <C-R><C-W> --sort path -g '!infrastructure/data_warehouse/**' -g '!signatures' -g '!*test*'<CR>
 inoremap jk <ESC>
