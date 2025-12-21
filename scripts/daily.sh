@@ -7,7 +7,7 @@ ${HOME}/config/scripts/cleanup_snaps.sh
 sudo journalctl --vacuum-time=7d
 
 cd ${SRC}
-qonstruct/cache_tool.py trim --entry-mtime "1 days ago" ${LINKING_CACHE}
+qonstruct/cache_tool.py trim --entry-mtime "2 days ago" ${LINKING_CACHE}
 hg qpop -a 
 hg up default
 ${SRC}/prebuild
@@ -26,5 +26,7 @@ hg fetch --cwd ${TOOLS}; pkill -f hg.real; pkill -f hg
 
 chmod 600 infrastructure/id_rsa
 
-qmount
+sudo mount gravytrain.eng.qumulo.com:/ /mnt/gravytrain
+sudo mount iss.eng.qumulo.com:/ /mnt/iss
+
 cp -f /mnt/gravytrain/build/latest/src/tags ~/src
