@@ -7,7 +7,6 @@ ${HOME}/config/scripts/cleanup_snaps.sh
 sudo journalctl --vacuum-time=7d
 
 cd ${SRC}
-qonstruct/cache_tool.py trim --entry-mtime "2 days ago" ${LINKING_CACHE}
 hg qpop -a 
 hg up default
 ${SRC}/prebuild
@@ -17,9 +16,8 @@ sudo apt update && sudo apt upgrade -y
 sudo apt autoremove -y
 qpkg sweep
 qpkg sync
-rm -rf build/tmp
 
-${SRC}/tools/clean_build.sh
+rm -rf build/tmp
 ${SRC}/tools/rm_merge_remnants.sh
 
 hg fetch --cwd ${TOOLS}; pkill -f hg.real; pkill -f hg
@@ -30,3 +28,6 @@ sudo mount gravytrain.eng.qumulo.com:/ /mnt/gravytrain
 sudo mount iss.eng.qumulo.com:/ /mnt/iss
 
 cp -f /mnt/gravytrain/build/latest/src/tags ~/src
+
+# Do this last, it's slow.
+qonstruct/cache_tool.py trim --entry-mtime "2 days ago" ${LINKING_CACHE}
