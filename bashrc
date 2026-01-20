@@ -7,4 +7,5 @@ alias daily="source ${HOME}/config/scripts/daily.sh"
 alias trg="tools/red_green.py"
 alias signatures="build gen; signatures/tool.py --flavor=debug update"
 alias hh="hg"
+alias np="${HOME}/tools/next-patch"
 ${HOME}/src/prebuild
