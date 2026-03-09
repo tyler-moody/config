@@ -29,15 +29,22 @@ if ! test -f "${HOME}/.vim/plugin/figlet.vim" && test -d ${HOME}/src ; then
 fi
 vim +PluginInstall +qall
 
-ln -s ${PWD}/tmux.conf ${HOME}/.tmux.conf 
+ln -s ${PWD}/tmux.conf ${HOME}/.tmux.conf
 
 ln -s ${PWD}/hgrc ${HOME}/.hgrc
 
 sudo git clone https://github.com/zolrath/wemux.git /usr/local/share/wemux
 sudo ln -s /usr/local/share/wemux/wemux /usr/local/bin/wemux
-cp /usr/local/share/wemux/wemux.conf.example ${PWD}/wemux.conf 
+cp /usr/local/share/wemux/wemux.conf.example ${PWD}/wemux.conf
 echo "host_list=(${USER})" >> ${PWD}/wemux.conf
 sudo mv ${PWD}/wemux.conf /usr/local/etc/wemux.conf
 
 # Install nfs-common for showmount, used by scripts/mount.sh
 sudo apt update && sudo apt install nfs-common -y
+
+# Trim the local linking cache daily
+if ! crontab -l 2>/dev/null | grep -qF "/home/tmoody/scripts/trim_cache.sh"; then
+    cache_trim_cron_job="15 0 * * * /home/tmoody/scripts/trim_cache.sh"
+    (crontab -l 2>/dev/null; echo "$cache_trim_cron_job") | crontab -
+    echo "Cron job added: $cache_trim_cron_job"
+fi

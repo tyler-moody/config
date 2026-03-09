@@ -35,6 +35,3 @@ max_size=$((10 * 1024 * 1024)) # 10MiB
 if [[ -f ${signatures_db} ]]  && [[ $(stat -c %s ${signatures_db}) -ge ${max_size} ]]; then
     rm ${signatures_db}
 fi
-
-# Do this last, it's slow.
-qonstruct/cache_tool.py trim --entry-mtime "2 days ago" ${LINKING_CACHE}
