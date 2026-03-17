@@ -12,7 +12,7 @@ hg up default
 ${SRC}/prebuild
 hg fetch
 ${SRC}/prebuild
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo NEEDRESTART_MODE=a apt upgrade --yes
 sudo apt autoremove -y
 qpkg sweep
 qpkg sync
