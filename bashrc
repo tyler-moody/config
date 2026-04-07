@@ -8,5 +8,4 @@ alias trg="tools/red_green.py"
 alias signatures="build gen; signatures/tool.py --flavor=debug update"
 alias hh="hg"
 alias np="${HOME}/tools/next-patch"
-alias dclaude="claude --dangerously-skip-permissions"
 ${HOME}/src/prebuild
