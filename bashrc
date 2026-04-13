@@ -1,4 +1,4 @@
-AWS_PROFILE=qumulo
+export AWS_PROFILE=qumulo
 PATH=/opt/qumulo/toolchain/bin:$PATH
 
 alias crd="./check_run.py --build --no-cunit-core-dumps"
