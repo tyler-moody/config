@@ -1,4 +1,6 @@
+AWS_PROFILE=qumulo
 PATH=/opt/qumulo/toolchain/bin:$PATH
+
 alias crd="./check_run.py --build --no-cunit-core-dumps"
 alias crdq="./check_run.py --build --no-cunit-core-dumps --flavor debug --remote-test-execution"
 alias crr="./check_run.py --build --no-cunit-core-dumps --flavor release"
@@ -8,4 +10,5 @@ alias trg="tools/red_green.py"
 alias signatures="build gen; signatures/tool.py --flavor=debug update"
 alias hh="hg"
 alias np="${HOME}/tools/next-patch"
+
 ${HOME}/src/prebuild
