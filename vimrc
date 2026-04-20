@@ -5,6 +5,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'jremmen/vim-ripgrep'
+Plugin 'bogado/file-line'
 call vundle#end()
 
 filetype plugin indent on
