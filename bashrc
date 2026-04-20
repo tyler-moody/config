@@ -1,6 +1,7 @@
 export AWS_PROFILE=qumulo
 PATH=/opt/qumulo/toolchain/bin:$PATH
 
+alias aws_login="/usr/local/bin/aws sso login --profile qumulo"
 alias crd="./check_run.py --build --no-cunit-core-dumps"
 alias crdq="./check_run.py --build --no-cunit-core-dumps --flavor debug --remote-test-execution"
 alias crr="./check_run.py --build --no-cunit-core-dumps --flavor release"
